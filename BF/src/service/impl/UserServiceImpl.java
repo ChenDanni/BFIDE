@@ -1,5 +1,6 @@
 package service.impl;
 
+import rmi.RemoteHelper;
 import service.UserService;
 
 import java.rmi.RemoteException;
@@ -10,6 +11,11 @@ import java.rmi.RemoteException;
 public class UserServiceImpl implements UserService{
     @Override
     public boolean login(String username, String password) throws RemoteException {
+        try {
+            return RemoteHelper.getInstance().getUserService().login(username,password);
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+        }
         return false;
     }
 

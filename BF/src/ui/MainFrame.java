@@ -14,6 +14,7 @@ public class MainFrame extends JFrame {
 	private JTextArea textArea;
 	private JLabel resultLabel;
 	JFrame frame;
+	JLabel currentUser;
 
 	private void initEditArea(){
 		textArea = new JTextArea();
@@ -33,12 +34,12 @@ public class MainFrame extends JFrame {
 		panel.add(output);
 		return panel;
 	}
-	private JLabel initCurrentUser(){
+	private void initCurrentUser(){
 		String user = TmpHelper.getCurrentUser();
 		if (user.equals("null")){
 			user = "";
 		}
-		return new JLabel(user);
+		currentUser = new JLabel(user);
 	}
 	private JMenuBar initMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
@@ -67,17 +68,25 @@ public class MainFrame extends JFrame {
 		JButton runButton = new JButton("run");
 		JButton login = new JButton("Login");
 
+		login.addActionListener(new LoginActionListener(this));
+
 		menuBar.add(fileMenu);
 		menuBar.add(versionMenu);
 		menuBar.add(runButton);
 		menuBar.add(login);
-		menuBar.add(initCurrentUser());
+		initCurrentUser();
+		menuBar.add(currentUser);
 		return menuBar;
 	}
 
 	public void setTitle(String title){
 		frame.setTitle(title);
 	}
+
+	public void setCurrentUser(){
+		currentUser.setText(TmpHelper.getCurrentUser());
+	}
+
 
 	public String getContent(){
 		return textArea.getText();

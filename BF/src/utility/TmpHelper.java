@@ -43,5 +43,7 @@ public class TmpHelper {
         updateContent(filePath,filename);
     }
 
-
+    public static void updateCurrentUser(String user){
+        updateContent(userPath,user);
+    }
 }
