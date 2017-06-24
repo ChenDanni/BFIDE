@@ -10,7 +10,7 @@ public class IOServiceImpl implements IOService{
 	
 	@Override
 	public boolean writeFile(String file, String userId, String fileName) {
-		File f = new File(userId + "_" + fileName);
+		File f = new File("/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "_" + fileName);
 		try {
 			FileWriter fw = new FileWriter(f, false);
 			fw.write(file);

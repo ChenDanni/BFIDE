@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import rmi.RemoteHelper;
 import utility.BFManager;
+import utility.TmpHelper;
 
 public class MainFrame extends JFrame {
 	private JTextArea textArea;
@@ -32,6 +33,13 @@ public class MainFrame extends JFrame {
 		panel.add(output);
 		return panel;
 	}
+	private JLabel initCurrentUser(){
+		String user = TmpHelper.getCurrentUser();
+		if (user.equals("null")){
+			user = "";
+		}
+		return new JLabel(user);
+	}
 	private JMenuBar initMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
@@ -51,7 +59,7 @@ public class MainFrame extends JFrame {
 		newBFItem.addActionListener(new MenuItemActionListener(this));
 		newoOKItem.addActionListener(new MenuItemActionListener(this));
 		openMenuItem.addActionListener(new MenuItemActionListener(this));
-		saveMenuItem.addActionListener(new SaveActionListener());
+		saveMenuItem.addActionListener(new MenuItemActionListener(this));
 		runMenuItem.addActionListener(new MenuItemActionListener(this));
 
 
@@ -63,11 +71,16 @@ public class MainFrame extends JFrame {
 		menuBar.add(versionMenu);
 		menuBar.add(runButton);
 		menuBar.add(login);
+		menuBar.add(initCurrentUser());
 		return menuBar;
 	}
 
 	public void setTitle(String title){
 		frame.setTitle(title);
+	}
+
+	public String getContent(){
+		return textArea.getText();
 	}
 
 	public MainFrame() {
@@ -78,6 +91,7 @@ public class MainFrame extends JFrame {
 		JMenuBar menuBar = initMenuBar();
 		initEditArea();
 		JPanel ioArea = initInputOutput();
+
 
 		frame.setJMenuBar(menuBar);
 		frame.add(textArea, BorderLayout.CENTER);

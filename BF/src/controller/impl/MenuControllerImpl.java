@@ -1,19 +1,34 @@
 package controller.impl;
 
-import controller.MainController;
+import controller.MenuController;
+import rmi.RemoteHelper;
 import ui.MainFrame;
 import utility.FILE_TYPE;
+import utility.TmpHelper;
 
 import javax.swing.*;
+import java.rmi.RemoteException;
 
 /**
  * Created by cdn on 17/6/22.
  */
-public class MainControllerImpl implements MainController{
+public class MenuControllerImpl implements MenuController {
 
     private MainFrame ui;
-    public MainControllerImpl(MainFrame ui){
+    public MenuControllerImpl(MainFrame ui){
         this.ui = ui;
+    }
+
+    public void handleSave(){
+        String code = ui.getContent();
+        String filename = TmpHelper.getCurrentFile();
+        String user = TmpHelper.getCurrentUser();
+
+        try {
+            RemoteHelper.getInstance().getIOService().writeFile(code, user, filename);
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override
@@ -34,6 +49,7 @@ public class MainControllerImpl implements MainController{
         }
 
         String filename = (String) JOptionPane.showInputDialog(ui,hint,"file name") + tail;
+        TmpHelper.updateCurrentFile(filename);
         ui.setTitle(filename);
     }
 }

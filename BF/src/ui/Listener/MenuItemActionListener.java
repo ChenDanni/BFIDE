@@ -1,7 +1,7 @@
 package ui.Listener;
 
-import controller.MainController;
-import controller.impl.MainControllerImpl;
+import controller.MenuController;
+import controller.impl.MenuControllerImpl;
 import ui.MainFrame;
 import utility.BFManager;
 import utility.FILE_TYPE;
@@ -13,13 +13,13 @@ import java.awt.event.ActionListener;
  * Created by cdn on 17/6/22.
  */
 public class MenuItemActionListener implements ActionListener{
-//    MainController controller = new Ma
+//    MenuController controller = new Ma
     MainFrame ui;
-    MainController mainController;
+    MenuController mainController;
     public MenuItemActionListener(MainFrame ui){
         super();
         this.ui = ui;
-        mainController = new MainControllerImpl(ui);
+        mainController = new MenuControllerImpl(ui);
     }
 
 
@@ -29,7 +29,7 @@ public class MenuItemActionListener implements ActionListener{
         if (cmd.equals("Open")) {
 
         } else if (cmd.equals("Save")) {
-
+            mainController.handleSave();
         } else if (cmd.equals("Run")) {
 
         } else if (cmd.equals(BFManager.newBFItem)){
