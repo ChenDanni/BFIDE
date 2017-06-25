@@ -15,6 +15,8 @@ public class MainFrame extends JFrame {
 	private JLabel resultLabel;
 	JFrame frame;
 	JLabel currentUser;
+	JTextArea input;
+	JTextArea output;
 
 	private void initEditArea(){
 		textArea = new JTextArea();
@@ -24,8 +26,8 @@ public class MainFrame extends JFrame {
 	private JPanel initInputOutput(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2));
-		JTextArea input = new JTextArea();
-		JTextArea output = new JTextArea();
+		input = new JTextArea();
+		output = new JTextArea();
 		input.setMargin(new Insets(10, 10, 10, 10));
 		output.setMargin(new Insets(10, 10, 10, 10));
 		input.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -65,14 +67,12 @@ public class MainFrame extends JFrame {
 
 
 		JMenu versionMenu = new JMenu("Version");
-		JButton runButton = new JButton("run");
 		JButton login = new JButton("Login");
 
 		login.addActionListener(new LoginActionListener(this));
 
 		menuBar.add(fileMenu);
 		menuBar.add(versionMenu);
-		menuBar.add(runButton);
 		menuBar.add(login);
 		initCurrentUser();
 		menuBar.add(currentUser);
@@ -87,9 +87,20 @@ public class MainFrame extends JFrame {
 		currentUser.setText(TmpHelper.getCurrentUser());
 	}
 
+	public String getInput(){
+		return input.getText();
+	}
+
+	public void setOutput(String output){
+		this.output.setText(output);
+	}
 
 	public String getContent(){
 		return textArea.getText();
+	}
+
+	public void setContent(String content){
+		textArea.setText(content);
 	}
 
 	public MainFrame() {
@@ -106,14 +117,9 @@ public class MainFrame extends JFrame {
 		frame.add(textArea, BorderLayout.CENTER);
 		frame.add(ioArea,BorderLayout.SOUTH);
 
-		// 显示结果
-//		resultLabel = new JLabel();
-//		resultLabel.setText("result");
-//		frame.add(resultLabel, BorderLayout.SOUTH);
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 400);
-		frame.setLocation(400, 200);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 

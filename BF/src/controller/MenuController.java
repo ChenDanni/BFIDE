@@ -10,4 +10,10 @@ public interface MenuController {
 
     public void handleSave();
 
+    public void handleRun();
+
+    public void handleOpen();
+
+    public void handleOpenFill(String filename);
+
 }

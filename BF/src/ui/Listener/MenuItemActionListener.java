@@ -22,16 +22,15 @@ public class MenuItemActionListener implements ActionListener{
         mainController = new MenuControllerImpl(ui);
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (cmd.equals("Open")) {
-
+            mainController.handleOpen();
         } else if (cmd.equals("Save")) {
             mainController.handleSave();
         } else if (cmd.equals("Run")) {
-
+            mainController.handleRun();
         } else if (cmd.equals(BFManager.newBFItem)){
             mainController.handleNew(FILE_TYPE.BF);
         } else if (cmd.equals(BFManager.newoOKItem)){
