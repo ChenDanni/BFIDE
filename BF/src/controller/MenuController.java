@@ -16,4 +16,8 @@ public interface MenuController {
 
     public void handleOpenFill(String filename);
 
+    public void handleVersion();
+
+    public void handleVersionGet(String version);
+
 }

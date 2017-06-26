@@ -1,26 +1,32 @@
 package serviceImpl;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.FileHandler;
 
 import service.IOService;
+import utility.FileHelper;
+
+import static utility.FileHelper.checkDir;
+import static utility.FileHelper.checkSave;
 
 public class IOServiceImpl implements IOService{
 
-	public void checkDir(File f){
-		if(!f.getParentFile().exists()) {
-			//如果目标文件所在的目录不存在，则创建父目录
-			System.out.println("目标文件所在目录不存在，准备创建它！");
-			if(!f.getParentFile().mkdirs()) {
-				System.out.println("创建目标文件所在目录失败！");
-			}
-		}
-	}
-
 	@Override
 	public boolean writeFile(String file, String userId, String fileName) {
-		File f = new File("/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + fileName);
+		fileName = FileHelper.transSaveName(fileName);
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(FileHelper.dateFormat);
+		String time = sdf.format(d);
+
+		System.out.println("保存" + fileName + " " + time);
+
+		String dir = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + fileName;
+		File f = new File(dir + "/" + time);
 
 		checkDir(f);
+		checkSave(dir);
 
 		try {
 			FileWriter fw = new FileWriter(f, false);
@@ -36,8 +42,13 @@ public class IOServiceImpl implements IOService{
 
 	@Override
 	public String readFile(String userId, String fileName) {
-
-		String path = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + fileName;
+		String path = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + FileHelper.transSaveName(fileName);
+		if (FileHelper.isDir(path)){
+			System.out.println("path is a dir");
+			String lastest = FileHelper.getLastestName(path);
+			path = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + FileHelper.transSaveName(fileName) +
+					"/" + lastest;
+		}
 		File file = new File(path);
 		Long filelength = file.length();
 		byte[] ret = new byte[filelength.intValue()];
@@ -69,9 +80,23 @@ public class IOServiceImpl implements IOService{
 		checkDir(f);
 		File[] files = f.listFiles();
 		for (File file : files){
-			filenames += file.getName() + " ";
+			filenames += FileHelper.transReadName(file.getName()) + " ";
 		}
 		return filenames;
 	}
-	
+
+	@Override
+	public String[] getVersions(String userId, String fileName) {
+		fileName = FileHelper.transSaveName(fileName);
+		String path = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + fileName;
+		File f = new File(path);
+		String filenames = "";
+		checkDir(f);
+		File[] files = f.listFiles();
+		for (File file : files){
+			filenames += FileHelper.transReadName(file.getName()) + " ";
+		}
+		return filenames.split(" ");
+	}
+
 }

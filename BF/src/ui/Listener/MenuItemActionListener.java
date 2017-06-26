@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
  * Created by cdn on 17/6/22.
  */
 public class MenuItemActionListener implements ActionListener{
-//    MenuController controller = new Ma
     MainFrame ui;
     MenuController mainController;
     public MenuItemActionListener(MainFrame ui){

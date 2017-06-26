@@ -21,7 +21,6 @@ public class IOServiceImpl implements IOService{
 
     @Override
     public String readFile(String userId, String fileName) throws RemoteException {
-        System.out.println("in");
         try {
             return RemoteHelper.getInstance().getIOService().readFile(userId,fileName);
         } catch (RemoteException e) {
@@ -40,5 +39,16 @@ public class IOServiceImpl implements IOService{
         }
 
         return "";
+    }
+
+    @Override
+    public String[] getVersions(String userId, String fileName) throws RemoteException {
+        try {
+            return RemoteHelper.getInstance().getIOService().getVersions(userId,fileName);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return new String[0];
     }
 }

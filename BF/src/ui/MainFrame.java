@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
 	JTextArea input;
 	JTextArea output;
 	JButton login;
+	JMenu versionMenu;
 	String login_info = "Login";
 	String logout_info = "Logout";
 
@@ -70,8 +71,8 @@ public class MainFrame extends JFrame {
 		runMenuItem.addActionListener(new MenuItemActionListener(this));
 
 
-		JMenu versionMenu = new JMenu("Version");
-
+		versionMenu = new JMenu("Version");
+		versionMenu.addMenuListener(new VersionActionListener());
 
 		if (TmpHelper.isLogin()){
 			login.setText(logout_info);
@@ -108,6 +109,16 @@ public class MainFrame extends JFrame {
 
 	public String getContent(){
 		return textArea.getText();
+	}
+
+	public void updateVersions(String[] versions){
+		versionMenu.removeAll();
+		VersionItemListener versionItemListener = new VersionItemListener();
+		for (String v : versions){
+			JMenuItem version = new JMenuItem(v);
+			version.addActionListener(versionItemListener);
+			versionMenu.add(version);
+		}
 	}
 
 	public void setContent(String content){

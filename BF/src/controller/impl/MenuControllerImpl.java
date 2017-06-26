@@ -66,11 +66,25 @@ public class MenuControllerImpl implements MenuController {
         System.out.println(TmpHelper.getCurrentUser() + "," + filename);
         try {
             String file = ioService.readFile(TmpHelper.getCurrentUser(),filename);
+            TmpHelper.updateCurrentFile(filename);
             ui.setContent(file);
+            ui.setTitle(filename);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void handleVersion() {
+        try {
+            String[] versions = ioService.getVersions(TmpHelper.getCurrentUser(),TmpHelper.getCurrentFile());
+            System.out.println("get version: " + versions.length);
+            ui.updateVersions(versions);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void handleNew(FILE_TYPE type) {
         String tail = "";
@@ -91,5 +105,16 @@ public class MenuControllerImpl implements MenuController {
         String filename = (String) JOptionPane.showInputDialog(ui,hint,"file name") + tail;
         TmpHelper.updateCurrentFile(filename);
         ui.setTitle(filename);
+    }
+
+    @Override
+    public void handleVersionGet(String version) {
+        try {
+            String file = ioService.readFile(TmpHelper.getCurrentUser(),
+                    TmpHelper.getCurrentFile() + "/" + version);
+            ui.setContent(file);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
