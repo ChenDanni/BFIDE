@@ -15,6 +15,14 @@ public class IOServiceImpl implements IOService{
 
 	@Override
 	public boolean writeFile(String file, String userId, String fileName) {
+		//内容是否改变
+		String content = readFile(userId,fileName);
+		if (file.equals(content)){
+			System.out.println("content does not change");
+			return true;
+		}
+
+		//保存
 		fileName = FileHelper.transSaveName(fileName);
 		Date d = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat(FileHelper.dateFormat);
@@ -24,7 +32,6 @@ public class IOServiceImpl implements IOService{
 
 		String dir = "/Users/user/Documents/un/s7/CSI/大作业/BFIDE/BFServer/src/file/" + userId + "/" + fileName;
 		File f = new File(dir + "/" + time);
-
 		checkDir(f);
 		checkSave(dir);
 
