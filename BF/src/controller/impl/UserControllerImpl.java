@@ -5,6 +5,8 @@ import service.impl.UserServiceImpl;
 import ui.MainFrame;
 import utility.TmpHelper;
 
+import java.rmi.RemoteException;
+
 /**
  * Created by cdn on 17/6/24.
  */
@@ -37,8 +39,11 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public void logout() {
-        System.out.println("in logout");
-        TmpHelper.updateCurrentUser("null");
+        try {
+            userService.logout("");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         ui.setCurrentUser();
         ui.setLogState();
     }

@@ -2,6 +2,7 @@ package service.impl;
 
 import rmi.RemoteHelper;
 import service.UserService;
+import utility.TmpHelper;
 
 import java.rmi.RemoteException;
 
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean logout(String username) throws RemoteException {
+        TmpHelper.updateCurrentUser("null");
+        TmpHelper.updateCurrentFile("");
+
         return false;
     }
 }

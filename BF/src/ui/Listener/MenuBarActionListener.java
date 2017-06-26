@@ -1,6 +1,8 @@
 package ui.Listener;
 
+import controller.ContentController;
 import controller.UserController;
+import controller.impl.ContentControllerImpl;
 import controller.impl.UserControllerImpl;
 import ui.LoginPanel;
 import ui.MainFrame;
@@ -13,17 +15,22 @@ import java.awt.event.ActionListener;
 /**
  * Created by cdn on 17/6/24.
  */
-public class LoginActionListener implements ActionListener {
+public class MenuBarActionListener implements ActionListener {
 
     UserController loginController;
+    ContentController contentController;
+    static MainFrame ui;
 
-    public LoginActionListener(MainFrame ui){
+    public MenuBarActionListener(MainFrame ui){
+        this.ui = ui;
         loginController = new UserControllerImpl(ui);
+        contentController = new ContentControllerImpl(ui);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Login")){
+        String cmd = e.getActionCommand();
+        if (cmd.equals("Login")){
             LoginPanel loginPanel = new LoginPanel();
             JPanel panel = loginPanel.getLoginPanel();
             int result = JOptionPane.showConfirmDialog(null,
@@ -33,12 +40,12 @@ public class LoginActionListener implements ActionListener {
                 String pwd = loginPanel.getPassword();
                 loginController.login(name,pwd);
             }
-        }else if (e.getActionCommand().equals("Logout")){
+        }else if (cmd.equals("Logout")){
             loginController.logout();
+        }else if (cmd.equals("undo")){
+            contentController.undo();
+        }else if (cmd.equals("redo")){
+            contentController.redo();
         }
-
-
-
-
     }
 }

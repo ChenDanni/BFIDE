@@ -1,18 +1,12 @@
 package ui;
 import ui.Listener.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 import javax.swing.*;
-
-import rmi.RemoteHelper;
 import utility.BFManager;
 import utility.TmpHelper;
 
 public class MainFrame extends JFrame {
 	private JTextArea textArea;
-	private JLabel resultLabel;
 	JFrame frame;
 	JLabel currentUser;
 	JTextArea input;
@@ -21,11 +15,15 @@ public class MainFrame extends JFrame {
 	JMenu versionMenu;
 	String login_info = "Login";
 	String logout_info = "Logout";
+	JButton undo;
+	JButton redo;
+	public boolean contentType;
 
 	private void initEditArea(){
 		textArea = new JTextArea();
 		textArea.setMargin(new Insets(10, 10, 10, 10));
 		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.getDocument().addDocumentListener(new EditAreaListener(this));
 	}
 	private JPanel initInputOutput(){
 		JPanel panel = new JPanel();
@@ -81,11 +79,15 @@ public class MainFrame extends JFrame {
 		}
 
 
-		login.addActionListener(new LoginActionListener(this));
+		login.addActionListener(new MenuBarActionListener(this));
+		undo.addActionListener(new MenuBarActionListener(this));
+		redo.addActionListener(new MenuBarActionListener(this));
 
 		menuBar.add(fileMenu);
 		menuBar.add(versionMenu);
 		menuBar.add(login);
+		menuBar.add(undo);
+		menuBar.add(redo);
 		initCurrentUser();
 		menuBar.add(currentUser);
 		return menuBar;
@@ -137,6 +139,9 @@ public class MainFrame extends JFrame {
 		//初始化组件
 		currentUser = new JLabel();
 		login = new JButton();
+		undo = new JButton("undo");
+		redo = new JButton("redo");
+		contentType = true;
 
 		// 创建窗体
 		frame = new JFrame("BF Client");
