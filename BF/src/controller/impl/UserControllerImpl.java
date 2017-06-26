@@ -23,13 +23,23 @@ public class UserControllerImpl implements UserController {
         try{
             boolean res = userService.login(username,password);
             if (res){
+                System.out.println("update username: " + username);
                 TmpHelper.updateCurrentUser(username);
                 ui.setCurrentUser();
+                ui.setLogState();
             }else{
                 System.out.println("password incorrect");
             }
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void logout() {
+        System.out.println("in logout");
+        TmpHelper.updateCurrentUser("null");
+        ui.setCurrentUser();
+        ui.setLogState();
     }
 }

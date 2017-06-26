@@ -46,4 +46,13 @@ public class TmpHelper {
     public static void updateCurrentUser(String user){
         updateContent(userPath,user);
     }
+
+    public static boolean isLogin(){
+        String user = getCurrentUser();
+        if (user.equals("null")){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

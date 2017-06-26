@@ -23,15 +23,22 @@ public class LoginActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        LoginPanel loginPanel = new LoginPanel();
-        JPanel panel = loginPanel.getLoginPanel();
-        int result = JOptionPane.showConfirmDialog(null,
-                panel,"login", JOptionPane.OK_CANCEL_OPTION,0,null);
-        if (result == JOptionPane.OK_OPTION) {
-            String name = loginPanel.getUsername();
-            String pwd = loginPanel.getPassword();
-            loginController.login(name,pwd);
+        if (e.getActionCommand().equals("Login")){
+            LoginPanel loginPanel = new LoginPanel();
+            JPanel panel = loginPanel.getLoginPanel();
+            int result = JOptionPane.showConfirmDialog(null,
+                    panel,"login", JOptionPane.OK_CANCEL_OPTION,0,null);
+            if (result == JOptionPane.OK_OPTION) {
+                String name = loginPanel.getUsername();
+                String pwd = loginPanel.getPassword();
+                loginController.login(name,pwd);
+            }
+        }else if (e.getActionCommand().equals("Logout")){
+            loginController.logout();
         }
+
+
+
 
     }
 }

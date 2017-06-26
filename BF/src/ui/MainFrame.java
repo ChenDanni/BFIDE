@@ -17,6 +17,9 @@ public class MainFrame extends JFrame {
 	JLabel currentUser;
 	JTextArea input;
 	JTextArea output;
+	JButton login;
+	String login_info = "Login";
+	String logout_info = "Logout";
 
 	private void initEditArea(){
 		textArea = new JTextArea();
@@ -39,9 +42,10 @@ public class MainFrame extends JFrame {
 	private void initCurrentUser(){
 		String user = TmpHelper.getCurrentUser();
 		if (user.equals("null")){
+			System.out.println("username is null");
 			user = "";
 		}
-		currentUser = new JLabel(user);
+		currentUser.setText(user);
 	}
 	private JMenuBar initMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
@@ -67,7 +71,14 @@ public class MainFrame extends JFrame {
 
 
 		JMenu versionMenu = new JMenu("Version");
-		JButton login = new JButton("Login");
+
+
+		if (TmpHelper.isLogin()){
+			login.setText(logout_info);
+		}else {
+			login.setText(login_info);
+		}
+
 
 		login.addActionListener(new LoginActionListener(this));
 
@@ -84,7 +95,7 @@ public class MainFrame extends JFrame {
 	}
 
 	public void setCurrentUser(){
-		currentUser.setText(TmpHelper.getCurrentUser());
+		initCurrentUser();
 	}
 
 	public String getInput(){
@@ -103,7 +114,19 @@ public class MainFrame extends JFrame {
 		textArea.setText(content);
 	}
 
+	public void setLogState(){
+		if (login.getText().equals(login_info)){
+			login.setText(logout_info);
+		}else {
+			login.setText(login_info);
+		}
+	}
+
 	public MainFrame() {
+		//初始化组件
+		currentUser = new JLabel();
+		login = new JButton();
+
 		// 创建窗体
 		frame = new JFrame("BF Client");
 		frame.setLayout(new BorderLayout());
