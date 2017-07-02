@@ -8,7 +8,6 @@ import java.util.Stack;
 public class EditNodes {
     private static Stack<String> opts = new Stack<>();
     private static Stack<String> undos = new Stack<>();
-    private static boolean afterUndo = false;
 
     private static boolean empty= false;
 
@@ -30,7 +29,6 @@ public class EditNodes {
     }
 
     public static String getUndo(){
-
         if (opts.isEmpty()){
             return "";
         }

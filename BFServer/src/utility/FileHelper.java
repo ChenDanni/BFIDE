@@ -47,7 +47,6 @@ public class FileHelper {
         return dates;
     }
 
-
     public static String getLastestName(String dir){
         SimpleDateFormat sdf = new SimpleDateFormat(FileHelper.dateFormat);
         ArrayList<Date> dates = sortDates(dir);

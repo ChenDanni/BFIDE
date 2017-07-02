@@ -21,10 +21,11 @@ public class FileListPanel {
         fileOpenActionListener = new FileOpenActionListener(frame);
         frame.setLayout(new FlowLayout());
         JPanel filePanel = new JPanel();
-
+        filePanel.setLayout(null);
         filePanel.setLayout(new BoxLayout(filePanel,BoxLayout.Y_AXIS));
         for (String file : files){
-            JLabel f = new JLabel(file);
+            JLabel f = new JLabel(file,SwingConstants.CENTER);
+            f.setSize(new Dimension(10,50));
             f.addMouseListener(fileOpenActionListener);
             filePanel.add(f);
         }
@@ -38,9 +39,16 @@ public class FileListPanel {
         cancel.addMouseListener(fileOpenActionListener);
         btnPanel.add(cancel);
         btnPanel.add(conform);
-        frame.add(filePanel);
-        frame.add(btnPanel);
-        frame.setSize(200,300);
+
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(filePanel,BorderLayout.CENTER);
+        p.setSize(190,100);
+        frame.setLayout(new BorderLayout());
+        frame.add(p,BorderLayout.CENTER);
+        frame.add(btnPanel,BorderLayout.SOUTH);
+        frame.setSize(200,150);
+//        frame.setSize(200,300);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

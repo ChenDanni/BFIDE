@@ -9,12 +9,13 @@ import java.awt.*;
 public class LoginPanel{
     private JPanel loginPanel;
     private JTextField username;
-    private JTextField password;
+    private JPasswordField password;
+
 
     public LoginPanel(){
         loginPanel = new JPanel();
         username = new JTextField(15);
-        password = new JTextField(15);
+        password = new JPasswordField(15);
     }
 
     public String getUsername(){

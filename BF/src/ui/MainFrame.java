@@ -22,20 +22,33 @@ public class MainFrame extends JFrame {
 	private void initEditArea(){
 		textArea = new JTextArea();
 		textArea.setMargin(new Insets(10, 10, 10, 10));
-		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.setLineWrap(true);
+		textArea.setBackground(Color.white);
 		textArea.getDocument().addDocumentListener(new EditAreaListener(this));
 	}
 	private JPanel initInputOutput(){
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2));
-		input = new JTextArea();
-		output = new JTextArea();
+
+		input = new JTextArea(6,10);
+		output = new JTextArea(6,10);
+		input.setLineWrap(true);
+		output.setLineWrap(true);
 		input.setMargin(new Insets(10, 10, 10, 10));
 		output.setMargin(new Insets(10, 10, 10, 10));
-		input.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		output.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		panel.add(input);
-		panel.add(output);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new BorderLayout());
+		p1.add(new JLabel("  input"),BorderLayout.NORTH);
+		p1.add(input);
+		JPanel p2 = new JPanel();
+		p2.setLayout(new BorderLayout());
+		p2.add(new JLabel("  output"),BorderLayout.NORTH);
+		p2.add(output);
+		p1.setBorder(BorderFactory.createLineBorder(Color.gray,1));
+		p2.setBorder(BorderFactory.createLineBorder(Color.gray,1));
+		panel.add(p1);
+		panel.add(p2);
+		panel.setSize(400,200);
 		return panel;
 	}
 	private void initCurrentUser(){
@@ -55,6 +68,12 @@ public class MainFrame extends JFrame {
 		newMenuItem.add(newBFItem);
 		newMenuItem.add(newoOKItem);
 		fileMenu.add(newMenuItem);
+		JMenuItem undoMenuItem = new JMenuItem("undo");
+		fileMenu.add(undoMenuItem);
+		undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z,java.awt.Event.CTRL_MASK));
+		JMenuItem redoMenuItem = new JMenuItem("redo");
+		fileMenu.add(redoMenuItem);
+		redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R,java.awt.Event.CTRL_MASK));
 		JMenuItem openMenuItem = new JMenuItem("Open");
 		fileMenu.add(openMenuItem);
 		JMenuItem saveMenuItem = new JMenuItem("Save");
@@ -62,11 +81,14 @@ public class MainFrame extends JFrame {
 		JMenuItem runMenuItem = new JMenuItem("Run");
 		fileMenu.add(runMenuItem);
 
+
 		newBFItem.addActionListener(new MenuItemActionListener(this));
 		newoOKItem.addActionListener(new MenuItemActionListener(this));
 		openMenuItem.addActionListener(new MenuItemActionListener(this));
 		saveMenuItem.addActionListener(new MenuItemActionListener(this));
 		runMenuItem.addActionListener(new MenuItemActionListener(this));
+		undoMenuItem.addActionListener(new MenuBarActionListener(this));
+		redoMenuItem.addActionListener(new MenuBarActionListener(this));
 
 
 		versionMenu = new JMenu("Version");
@@ -90,6 +112,7 @@ public class MainFrame extends JFrame {
 		menuBar.add(redo);
 		initCurrentUser();
 		menuBar.add(currentUser);
+		menuBar.setBackground(new Color(0,161,166));
 		return menuBar;
 	}
 
@@ -157,7 +180,7 @@ public class MainFrame extends JFrame {
 		frame.add(ioArea,BorderLayout.SOUTH);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 400);
+		frame.setSize(400, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
